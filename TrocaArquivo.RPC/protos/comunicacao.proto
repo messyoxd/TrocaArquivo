@@ -1,0 +1,47 @@
+syntax="proto3";
+
+service TrocaArquivoRPC{
+    rpc Conectar(PacoteConexao) returns (RespostaConexao) {}
+    rpc ConectarDevolta(PacoteConexao) returns (RespostaConexao) {}
+    rpc AdicionarDispositivoEmAmbiente(Dispositivo) returns (Dispositivo) {}
+    rpc CriarAmbiente(Ambiente) returns (Ambiente) {}
+    rpc MoverDispositivo(Dispositivo) returns (RespostaConexao) {}
+    rpc MandarArquivo(Arquivo) returns (RespostaConexao) {}
+    rpc ReceberArquivo(Arquivo) returns (RespostaConexao) {}
+    rpc RequisitarUsuarios(Dispositivo) returns (JsonPacket) {}
+    rpc RequisitarAmbientes(Dispositivo) returns (JsonPacket) {}
+}
+
+message Ambiente{
+    string Nome = 1;
+    int32 x = 2;
+    int32 y = 3;
+    int32 AmbienteSprite = 4;
+}
+message Dispositivo{
+    string Nome = 1;
+    string IP = 2;
+    string Porta = 3;
+    int32 x = 4;
+    int32 y = 5;
+    int32 rotation = 6;
+    int32 DispositivoSprite = 7;
+    Ambiente ambiente = 8;
+}
+message PacoteConexao{
+    Dispositivo dispositivo = 1;
+    string IPServidor = 2;
+    string PortaServidor = 3;
+}
+message RespostaConexao{
+    bool Resultado = 1;
+    string Mensagem = 2;
+}
+message Arquivo{
+    Dispositivo dispositivoReceptor = 1;
+    string Nome = 2;
+    bytes Conteudo = 3;
+}
+message JsonPacket{
+    string jsonBytes = 1;
+}
